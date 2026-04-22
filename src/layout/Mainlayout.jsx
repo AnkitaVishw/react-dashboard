@@ -1,22 +1,23 @@
 import Sidebar from "../components/Sidebar"
 import Navbar from "../components/Navbar"
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children, search, setSearch }) => {
+  console.log("MainLayout props:", search, setSearch)
   return (
-    <div className="flex h-screen">
-
+    <div className="flex">
+      
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
-        <Navbar />
+      <div className="flex-1">
 
-        <div className="flex-1 p-8 bg-gray-100 overflow-auto">
+        <Navbar search={search} setSearch={setSearch} />
+
+        <div className="p-6">
           {children}
         </div>
-      </div>
 
+      </div>
     </div>
   )
 }
-
 export default MainLayout
