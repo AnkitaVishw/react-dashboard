@@ -1,34 +1,6 @@
-import { useEffect, useState } from "react"
-const Table = () =>{
-    const [users, setUsers] = useState([])    // store data
-    const [loading, setLoading] = useState(true) //loading state
-    const [error, setError] = useState(null)     //error state
 
-    // Fetch data when component loads
-
-    useEffect(() => {
-        fetch("https://jsonplaceholder.typicode.com/users")
-        .then((res) => res.json())
-        .then ((data) =>{
-            setUsers(data)
-            setLoading(false)
-        })
-        .catch((err) =>{
-            setError("Failed to fetch data")
-            setLoading(false)
-        })
-    }, [])
-
-    //Loading UI
-    if (loading) {
-        return <p className="p-6">Loading users...</p>
-
-    }
-
-    // Error UI
-    if(error){
-        return <p>{error}</p>
-    } 
+const Table = ({users = []}) =>{
+    
 
     return (
         <div className="bg-white p-6 rounded-xl shadow">
@@ -43,12 +15,23 @@ const Table = () =>{
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) =>(
+                    {!users ||users.length === 0 ?(
+                        <tr>
+                            <td colSpan="2" className="text-center py-4 text-gray-500">
+                                No Users found
+                            </td>
+                        </tr>
+                    ) :(
+
+                        users.map((user) =>(
                         <tr key={user.id} className="border-b hover:bg-gray-50">
                             <td className="py-2">{user.name}</td>
                             <td>{user.email}</td>
                         </tr>
-                    ))}
+                    ))
+                )}
+                    
+                    
                 </tbody>
             </table>
         </div>
